@@ -16,7 +16,6 @@ runs:
       with:
         token: ${{ inputs.token }}
         auto: true
-      if: github.event.schedule=='* * 1 * *'
 
 
     - uses: li1ht2ay-3es/gi1-ac2io3s@rebase-repo
@@ -34,4 +33,3 @@ runs:
 
         auto: true
         token: ${{ inputs.token }}
-      if: github.event.schedule=='* * 1 * *'
