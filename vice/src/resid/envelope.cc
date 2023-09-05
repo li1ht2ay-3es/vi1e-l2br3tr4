@@ -240,11 +240,11 @@ void EnvelopeGenerator::writeCONTROL_REG(reg8 control)
         rate_period = rate_counter_period[decay];
         state_pipeline = 2;
         if (reset_rate_counter || exponential_pipeline == 2) {
-            envelope_pipeline = exponential_counter_period == 1 || exponential_pipeline == 2 ? 2 : 4;
+            envelope_pipeline = (exponential_counter_period == 1 || exponential_pipeline == 2) ? 2 : 4;
         }
         else if (exponential_pipeline == 1) { state_pipeline = 3; }
     }
-    else {state_pipeline = envelope_pipeline > 0 ? 3 : 2;}
+    else {state_pipeline = (envelope_pipeline > 0) ? 3 : 2;}
     gate = gate_next;
   }
 }

@@ -75,6 +75,7 @@ float retro_refresh = 0;
 unsigned int retro_refresh_ms = 0;
 static unsigned int prev_sound_sample_rate = 0;
 static float prev_aspect_ratio = 0;
+static unsigned int sound_master_volume = 100;
 
 bool retro_ui_finalized = false;
 
@@ -3423,130 +3424,6 @@ static void retro_set_core_options()
 #endif
       },
       {
-         "vice_vkbd_theme",
-         "OSD > Virtual KBD Theme",
-         "Virtual KBD Theme",
-         "The keyboard comes up with RetroPad Select by default.",
-         NULL,
-         "osd",
-         {
-            { "auto", "Automatic (shadow)" },
-            { "auto_outline", "Automatic (outline)" },
-            { "brown", "Brown (shadow)" },
-            { "brown_outline", "Brown (outline)" },
-            { "beige", "Beige (shadow)" },
-            { "beige_outline", "Beige (outline)" },
-            { "dark", "Dark (shadow)" },
-            { "dark_outline", "Dark (outline)" },
-            { "light", "Light (shadow)" },
-            { "light_outline", "Light (outline)" },
-            { NULL, NULL },
-         },
-         "auto"
-      },
-      {
-         "vice_vkbd_transparency",
-         "OSD > Virtual KBD Transparency",
-         "Virtual KBD Transparency",
-         "Keyboard transparency can be toggled with RetroPad A.",
-         NULL,
-         "osd",
-         {
-            { "0%",   NULL },
-            { "25%",  NULL },
-            { "50%",  NULL },
-            { "75%",  NULL },
-            { "100%", NULL },
-            { NULL, NULL },
-         },
-         "25%"
-      },
-      {
-         "vice_vkbd_dimming",
-         "OSD > Virtual KBD Dimming",
-         "Virtual KBD Dimming",
-         "Dimming level of the surrounding area.",
-         NULL,
-         "osd",
-         {
-            { "0%",   NULL },
-            { "25%",  NULL },
-            { "50%",  NULL },
-            { "75%",  NULL },
-            { "100%", NULL },
-            { NULL, NULL },
-         },
-         "25%"
-      },
-      {
-         "vice_statusbar",
-         "OSD > Statusbar Mode",
-         "Statusbar Mode",
-         "- 'Full': Joyports + Messages + LEDs\n- 'Basic': Messages + LEDs\n- 'Minimal': LED colors only",
-         NULL,
-         "osd",
-         {
-            { "bottom", "Bottom Full" },
-            { "bottom_minimal", "Bottom Full Minimal" },
-            { "bottom_basic", "Bottom Basic" },
-            { "bottom_basic_minimal", "Bottom Basic Minimal" },
-            { "top", "Top Full" },
-            { "top_minimal", "Top Full Minimal" },
-            { "top_basic", "Top Basic" },
-            { "top_basic_minimal", "Top Basic Minimal" },
-            { NULL, NULL },
-         },
-         "bottom"
-      },
-      {
-         "vice_statusbar_startup",
-         "OSD > Statusbar Startup",
-         "Statusbar Startup",
-         "Show statusbar on startup.",
-         NULL,
-         "osd",
-         {
-            { "disabled", NULL },
-            { "enabled", NULL },
-            { NULL, NULL },
-         },
-         "disabled"
-      },
-      {
-         "vice_statusbar_messages",
-         "OSD > Statusbar Messages",
-         "Statusbar Messages",
-         "Show messages when statusbar is hidden.",
-         NULL,
-         "osd",
-         {
-            { "disabled", NULL },
-            { "enabled", NULL },
-            { NULL, NULL },
-         },
-         "disabled"
-      },
-      {
-         "vice_joyport_pointer_color",
-         "OSD > Light Pen/Gun Pointer Color",
-         "Light Pen/Gun Pointer Color",
-         "Crosshair color for light pens and guns.",
-         NULL,
-         "osd",
-         {
-            { "disabled", NULL },
-            { "black", "Black" },
-            { "white", "White" },
-            { "red", "Red" },
-            { "green", "Green" },
-            { "blue", "Blue" },
-            { "yellow", "Yellow" },
-            { "purple", "Purple" },
-            { NULL, NULL },
-         },
-         "blue"
-      },
-      {
          "vice_audio_options_display",
          "Show Audio Options",
          NULL,
@@ -3800,7 +3677,7 @@ static void retro_set_core_options()
 #else
          "Audio > ReSID Filter 6581 Bias",
          "ReSID Filter 6581 Bias",
-         "Filter bias for 6581, which can be used to adjust DAC bias in millivolts.",
+         "Filter bias for 6581, which can be used to adjust DAC bias in millivolts. Known as volume gain.",
 #endif
          NULL,
          "audio",
@@ -3835,7 +3712,7 @@ static void retro_set_core_options()
          "vice_resid_8580filterbias",
          "Audio > ReSID Filter 8580 Bias",
          "ReSID Filter 8580 Bias",
-         "Filter bias for 8580, which can be used to adjust DAC bias in millivolts.",
+         "Filter bias for 8580, which can be used to adjust DAC bias in millivolts. Known as volume gain.",
          NULL,
          "audio",
          {
@@ -3887,17 +3764,78 @@ static void retro_set_core_options()
          "vice_sound_sample_rate",
          "Audio > Sample Rate",
          "Sample Rate",
-         "Sound sample rate in Hz.",
+         "Internal sampling rate. Higher is less lag and more crisp.",
          NULL,
          "audio",
          {
             { "22050", NULL },
             { "44100", NULL },
             { "48000", NULL },
+            { "72000", NULL },
             { "96000", NULL },
+            { "144000", NULL },
+            { "192000", NULL },
+            { "288000", NULL },
+            { "384000", NULL },
+            { "576000", NULL },
+            { "768000", NULL },
+            { "960000", NULL },
             { NULL, NULL },
          },
          "48000"
+      },
+      {
+         "vice_sound_volume",
+         "Audio > Master Volume",
+         "Master Volume",
+         "Output volume level",
+         NULL,
+         "audio",
+         {
+            { "0", NULL },
+            { "5", NULL },
+            { "10", NULL },
+            { "15", NULL },
+            { "20", NULL },
+            { "25", NULL },
+            { "30", NULL },
+            { "35", NULL },
+            { "40", NULL },
+            { "45", NULL },
+            { "50", NULL },
+            { "55", NULL },
+            { "60", NULL },
+            { "65", NULL },
+            { "70", NULL },
+            { "75", NULL },
+            { "80", NULL },
+            { "85", NULL },
+            { "90", NULL },
+            { "95", NULL },
+            { "100", NULL },
+            { "105", NULL },
+            { "110", NULL },
+            { "115", NULL },
+            { "120", NULL },
+            { "125", NULL },
+            { "130", NULL },
+            { "135", NULL },
+            { "140", NULL },
+            { "145", NULL },
+            { "150", NULL },
+            { "155", NULL },
+            { "160", NULL },
+            { "165", NULL },
+            { "170", NULL },
+            { "175", NULL },
+            { "180", NULL },
+            { "185", NULL },
+            { "190", NULL },
+            { "195", NULL },
+            { "200", NULL },
+            { NULL, NULL },
+         },
+         "100"
       },
 #if !defined(__XPET__) && !defined(__XCBM2__)
       {
@@ -4128,6 +4066,130 @@ static void retro_set_core_options()
          "positional"
       },
 #endif
+      {
+         "vice_vkbd_theme",
+         "OSD > Virtual KBD Theme",
+         "Virtual KBD Theme",
+         "The keyboard comes up with RetroPad Select by default.",
+         NULL,
+         "osd",
+         {
+            { "auto", "Automatic (shadow)" },
+            { "auto_outline", "Automatic (outline)" },
+            { "brown", "Brown (shadow)" },
+            { "brown_outline", "Brown (outline)" },
+            { "beige", "Beige (shadow)" },
+            { "beige_outline", "Beige (outline)" },
+            { "dark", "Dark (shadow)" },
+            { "dark_outline", "Dark (outline)" },
+            { "light", "Light (shadow)" },
+            { "light_outline", "Light (outline)" },
+            { NULL, NULL },
+         },
+         "auto"
+      },
+      {
+         "vice_vkbd_transparency",
+         "OSD > Virtual KBD Transparency",
+         "Virtual KBD Transparency",
+         "Keyboard transparency can be toggled with RetroPad A.",
+         NULL,
+         "osd",
+         {
+            { "0%",   NULL },
+            { "25%",  NULL },
+            { "50%",  NULL },
+            { "75%",  NULL },
+            { "100%", NULL },
+            { NULL, NULL },
+         },
+         "25%"
+      },
+      {
+         "vice_vkbd_dimming",
+         "OSD > Virtual KBD Dimming",
+         "Virtual KBD Dimming",
+         "Dimming level of the surrounding area.",
+         NULL,
+         "osd",
+         {
+            { "0%",   NULL },
+            { "25%",  NULL },
+            { "50%",  NULL },
+            { "75%",  NULL },
+            { "100%", NULL },
+            { NULL, NULL },
+         },
+         "25%"
+      },
+      {
+         "vice_statusbar",
+         "OSD > Statusbar Mode",
+         "Statusbar Mode",
+         "- 'Full': Joyports + Messages + LEDs\n- 'Basic': Messages + LEDs\n- 'Minimal': LED colors only",
+         NULL,
+         "osd",
+         {
+            { "bottom", "Bottom Full" },
+            { "bottom_minimal", "Bottom Full Minimal" },
+            { "bottom_basic", "Bottom Basic" },
+            { "bottom_basic_minimal", "Bottom Basic Minimal" },
+            { "top", "Top Full" },
+            { "top_minimal", "Top Full Minimal" },
+            { "top_basic", "Top Basic" },
+            { "top_basic_minimal", "Top Basic Minimal" },
+            { NULL, NULL },
+         },
+         "bottom"
+      },
+      {
+         "vice_statusbar_startup",
+         "OSD > Statusbar Startup",
+         "Statusbar Startup",
+         "Show statusbar on startup.",
+         NULL,
+         "osd",
+         {
+            { "disabled", NULL },
+            { "enabled", NULL },
+            { NULL, NULL },
+         },
+         "disabled"
+      },
+      {
+         "vice_statusbar_messages",
+         "OSD > Statusbar Messages",
+         "Statusbar Messages",
+         "Show messages when statusbar is hidden.",
+         NULL,
+         "osd",
+         {
+            { "disabled", NULL },
+            { "enabled", NULL },
+            { NULL, NULL },
+         },
+         "disabled"
+      },
+      {
+         "vice_joyport_pointer_color",
+         "OSD > Light Pen/Gun Pointer Color",
+         "Light Pen/Gun Pointer Color",
+         "Crosshair color for light pens and guns.",
+         NULL,
+         "osd",
+         {
+            { "disabled", NULL },
+            { "black", "Black" },
+            { "white", "White" },
+            { "red", "Red" },
+            { "green", "Green" },
+            { "blue", "Blue" },
+            { "yellow", "Yellow" },
+            { "purple", "Purple" },
+            { NULL, NULL },
+         },
+         "blue"
+      },
       {
          "vice_mapping_options_display",
          "Show Mapping Options",
@@ -7503,6 +7565,15 @@ static void update_variables(void)
    }
 #endif
 
+   var.key = "vice_sound_volume";
+   var.value = NULL;
+   if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+   {
+      sound_master_volume = atoi(var.value);
+      if (sound_volume_counter == 0)
+         resources_set_int("SoundVolume", sound_master_volume);
+   }
+
    retro_set_options_display();
 
 #if defined(__X64__) || defined(__X64SC__) || defined(__X64DTV__) || defined(__X128__) || defined(__XSCPU64__) || defined(__XCBM5x0__) || defined(__XVIC__) || defined(__XPLUS4__)
@@ -8636,7 +8707,7 @@ void retro_run(void)
    {
       sound_volume_counter--;
       if (sound_volume_counter == 0)
-         resources_set_int("SoundVolume", 100);
+         resources_set_int("SoundVolume", sound_master_volume);
    }
 
    /* Video output */

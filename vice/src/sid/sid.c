@@ -1193,7 +1193,7 @@ int sid_machine_engine_get_max_sids(int engine)
     int emax = sid_engine_get_max_sids(engine);
     int mmax = sid_machine_get_max_sids();
 
-    return emax < mmax ? emax : mmax;
+    return (emax < mmax) ? emax : mmax;
 }
 
 

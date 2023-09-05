@@ -147,8 +147,8 @@ static void latch_trigger(void)
     if (last != this) {
         if (this) {
             DBGIRQ(("SPEECH: irq assert latch cause: "));
-            DBGIRQ(("%s", (((irq_latch & irq_enable) >> IRQNUM_EOS)) & 1 ? "eos " : ""));
-            DBGIRQ(("%s", (((irq_latch & irq_enable) >> IRQNUM_DTRD)) & 1 ? "dtrd " : ""));
+            DBGIRQ(("%s", ((((irq_latch & irq_enable) >> IRQNUM_EOS)) & 1) ? "eos " : ""));
+            DBGIRQ(("%s", ((((irq_latch & irq_enable) >> IRQNUM_DTRD)) & 1) ? "dtrd " : ""));
             DBGIRQ(("\n"));
             maincpu_set_irq(0, 1);
         } else {

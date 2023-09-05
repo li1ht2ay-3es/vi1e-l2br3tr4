@@ -531,9 +531,9 @@ bool SID::set_sampling_parameters(double clock_freq, sampling_method method,
       double wt = wc*jx/f_cycles_per_sample;
       double temp = jx/(fir_N/2);
       double Kaiser =
-        fabs(temp) <= 1 ? I0(beta*sqrt(1 - temp*temp))/I0beta : 0;
+        (fabs(temp) <= 1) ? I0(beta*sqrt(1 - temp*temp))/I0beta : 0;
       double sincwt =
-        fabs(wt) >= 1e-8 ? sin(wt)/wt : 1;
+        (fabs(wt) >= 1e-8) ? sin(wt)/wt : 1;
       double val =
         (1 << FIR_SHIFT)*filter_scale*f_samples_per_cycle*wc/pi*sincwt*Kaiser;
       fir[i * fir_N + j] = short(val + 0.5);

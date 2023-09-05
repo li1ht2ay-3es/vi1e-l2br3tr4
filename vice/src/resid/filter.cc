@@ -212,7 +212,7 @@ Filter::Filter()
             double vmin = fi.opamp_voltage[0][0];
             double opamp_max = fi.opamp_voltage[0][1];
             double kVddt = fi.k*(fi.Vdd - fi.Vth);
-            double vmax = kVddt < opamp_max ? opamp_max : kVddt;
+            double vmax = (kVddt < opamp_max) ? opamp_max : kVddt;
             double denorm = vmax - vmin;
             double norm = 1.0/denorm;
 
@@ -289,7 +289,7 @@ Filter::Filter()
                 int df = f - fp;  // Scaled by 2^15
 
                 // 16 bits unsigned: m*2^16*(fn - xmin)
-                opamp[j].vx = f > (0xffff << 15) ? 0xffff : f >> 15;
+                opamp[j].vx = (f > (0xffff << 15)) ? 0xffff : f >> 15;
                 // 16 bits (15 bits + sign bit): 2^11*dfn
                 opamp[j].dvx = df >> (15 - 11);
             }

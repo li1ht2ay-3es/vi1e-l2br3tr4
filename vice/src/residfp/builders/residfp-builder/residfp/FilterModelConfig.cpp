@@ -122,7 +122,7 @@ FilterModelConfig::FilterModelConfig() :
     dac_zero(6.65),
     dac_scale(2.63),
     vmin(opamp_voltage[0].x),
-    vmax(kVddt < opamp_voltage[0].y ? opamp_voltage[0].y : kVddt),
+    vmax((kVddt < opamp_voltage[0].y) ? opamp_voltage[0].y : kVddt),
     denorm(vmax - vmin),
     norm(1.0 / denorm),
     N16(norm * ((1 << 16) - 1)),

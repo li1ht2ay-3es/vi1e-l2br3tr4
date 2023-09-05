@@ -230,10 +230,10 @@ SincResampler::SincResampler(double clockFrequency, double samplingFrequency, do
                 const double x = j - jPhase;
 
                 const double xt = x / (firN / 2);
-                const double kaiserXt = fabs(xt) < 1. ? I0(beta * sqrt(1. - xt * xt)) / I0beta : 0.;
+                const double kaiserXt = (fabs(xt) < 1.) ? I0(beta * sqrt(1. - xt * xt)) / I0beta : 0.;
 
                 const double wt = wc * x / cyclesPerSampleD;
-                const double sincWt = fabs(wt) >= 1e-8 ? sin(wt) / wt : 1.;
+                const double sincWt = (fabs(wt) >= 1e-8) ? sin(wt) / wt : 1.;
 
                 (*firTable)[i][j] = static_cast<short>(scale * sincWt * kaiserXt);
             }

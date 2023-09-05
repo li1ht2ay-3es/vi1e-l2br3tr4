@@ -102,8 +102,8 @@ inline static void update_sprite_collisions(raster_t *raster)
 /* VIC-II are put correctly to the lower frame buffer area */
 inline static int map_current_line_to_area(raster_t *raster)
 {
-    return (raster->current_line < raster->geometry->first_displayed_line
-            && raster->geometry->screen_size.height <= raster->geometry->last_displayed_line ?
+    return ((raster->current_line < raster->geometry->first_displayed_line
+            && raster->geometry->screen_size.height <= raster->geometry->last_displayed_line) ?
             raster->geometry->screen_size.height + raster->current_line
             : raster->current_line);
 }

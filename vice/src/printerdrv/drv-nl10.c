@@ -505,14 +505,14 @@ static void draw_char_nlq(nl10_t *nl10, const uint8_t c)
             for (k = 0; k < expanded; k++)
             {
                 uint16_t data;
-                data = ((cdata[i + 1] & 0x01 ? 0x0002 : 0) + (cdata[i + 24] & 0x01 ? 0x0001 : 0) +
-                        (cdata[i + 1] & 0x02 ? 0x0008 : 0) + (cdata[i + 24] & 0x02 ? 0x0004 : 0) +
-                        (cdata[i + 1] & 0x04 ? 0x0020 : 0) + (cdata[i + 24] & 0x04 ? 0x0010 : 0) +
-                        (cdata[i + 1] & 0x08 ? 0x0080 : 0) + (cdata[i + 24] & 0x08 ? 0x0040 : 0) +
-                        (cdata[i + 1] & 0x10 ? 0x0200 : 0) + (cdata[i + 24] & 0x10 ? 0x0100 : 0) +
-                        (cdata[i + 1] & 0x20 ? 0x0800 : 0) + (cdata[i + 24] & 0x20 ? 0x0400 : 0) +
-                        (cdata[i + 1] & 0x40 ? 0x2000 : 0) + (cdata[i + 24] & 0x40 ? 0x1000 : 0) +
-                        (cdata[i + 1] & 0x80 ? 0x8000 : 0) + (cdata[i + 24] & 0x80 ? 0x4000 : 0));
+                data = (((cdata[i + 1] & 0x01) ? 0x0002 : 0) + ((cdata[i + 24] & 0x01) ? 0x0001 : 0) +
+                        ((cdata[i + 1] & 0x02) ? 0x0008 : 0) + ((cdata[i + 24] & 0x02) ? 0x0004 : 0) +
+                        ((cdata[i + 1] & 0x04) ? 0x0020 : 0) + ((cdata[i + 24] & 0x04) ? 0x0010 : 0) +
+                        ((cdata[i + 1] & 0x08) ? 0x0080 : 0) + ((cdata[i + 24] & 0x08) ? 0x0040 : 0) +
+                        ((cdata[i + 1] & 0x10) ? 0x0200 : 0) + ((cdata[i + 24] & 0x10) ? 0x0100 : 0) +
+                        ((cdata[i + 1] & 0x20) ? 0x0800 : 0) + ((cdata[i + 24] & 0x20) ? 0x0400 : 0) +
+                        ((cdata[i + 1] & 0x40) ? 0x2000 : 0) + ((cdata[i + 24] & 0x40) ? 0x1000 : 0) +
+                        ((cdata[i + 1] & 0x80) ? 0x8000 : 0) + ((cdata[i + 24] & 0x80) ? 0x4000 : 0));
 
                 for (j = rs; j < re; j++) {
                     for (n = 0; n < nl10->expand; n++)
@@ -528,7 +528,7 @@ static void draw_char_nlq(nl10_t *nl10, const uint8_t c)
                     }
                 }
 
-                nl10->pos_x += ((i * expanded + k) % 4) == 1 ? 2 : 1;
+                nl10->pos_x += (((i * expanded + k) % 4) == 1) ? 2 : 1;
             }
         }
 
@@ -2259,8 +2259,8 @@ static int drv_nl10_init_charset(void)
 
     /* construct nlq cbm-graphic characters from draft cbm-graphic characters */
     for (i = 129; i < CHARSET_SIZE; i++) {
-        drv_nl10_charset_nlq[i * 47] = drv_nl10_charset[i * 12] & 128 ? 255 : 0;
-        drv_nl10_charset_nlq_italic[i * 47] = drv_nl10_charset[i * 12] & 128 ? 255 : 0;
+        drv_nl10_charset_nlq[i * 47] = (drv_nl10_charset[i * 12] & 128) ? 255 : 0;
+        drv_nl10_charset_nlq_italic[i * 47] = (drv_nl10_charset[i * 12] & 128) ? 255 : 0;
 
         for (j = 0; j < 6; j++) {
             uint8_t b = drv_nl10_charset[i * 12 + j * 2 + 1];

@@ -351,7 +351,7 @@ int rs232net_set_status(int fd, enum rs232handshake_out status)
 #ifdef LOG_MODEM_STATUS
     if (dtr != fds[fd].dtr_out) {
         DEBUG_LOG_MESSAGE((rs232net_log, "rs232net_set_status(fd:%d) status:%02x dtr:%d rts:%d",
-            fd, status, dtr, status & RS232_HSO_RTS ? 1 : 0
+            fd, status, dtr, (status & RS232_HSO_RTS) ? 1 : 0
         ));
     }
 #endif
@@ -406,10 +406,10 @@ enum rs232handshake_in rs232net_get_status(int fd)
     if (status != oldstatus) {
         printf("rs232net_get_status(fd:%d): DCD:%d modem_status:%02x cts:%d dsr:%d dcd:%d ri:%d\n",
                fd, fds[fd].dcd_in, status,
-               status & RS232_HSI_CTS ? 1 : 0,
-               status & RS232_HSI_DSR ? 1 : 0,
-               status & RS232_HSI_DCD ? 1 : 0,
-               status & RS232_HSI_RI ? 1 : 0
+               (status & RS232_HSI_CTS) ? 1 : 0,
+               (status & RS232_HSI_DSR) ? 1 : 0,
+               (status & RS232_HSI_DCD) ? 1 : 0,
+               (status & RS232_HSI_RI) ? 1 : 0
               );
         oldstatus = status;
     }

@@ -291,7 +291,7 @@ void EnvelopeGenerator::clock()
         else
         {
             if (counter_enabled && (++exponential_counter == exponential_counter_period))
-                exponential_pipeline = exponential_counter_period != 1 ? 2 : 1;
+                exponential_pipeline = (exponential_counter_period != 1) ? 2 : 1;
         }
     }
 

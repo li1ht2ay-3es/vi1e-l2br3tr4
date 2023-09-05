@@ -159,14 +159,14 @@ void WaveformGenerator::writePW_LO(reg8 pw_lo)
 {
   pw = (pw & 0xf00) | (pw_lo & 0x0ff);
   // Push next pulse level into pulse level pipeline.
-  pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
+  pulse_output = ((accumulator >> 12) >= pw) ? 0xfff : 0x000;
 }
 
 void WaveformGenerator::writePW_HI(reg8 pw_hi)
 {
   pw = ((pw_hi << 8) & 0xf00) | (pw & 0x0ff);
   // Push next pulse level into pulse level pipeline.
-  pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
+  pulse_output = ((accumulator >> 12) >= pw) ? 0xfff : 0x000;
 }
 
 bool do_pre_writeback(reg8 waveform_prev, reg8 waveform, bool is6581)
@@ -210,9 +210,9 @@ void WaveformGenerator::writeCONTROL_REG(reg8 control)
   // no_noise and no_pulse are used in set_waveform_output() as bitmasks to
   // only let the noise or pulse influence the output when the noise or pulse
   // waveforms are selected.
-  no_noise = waveform & 0x8 ? 0x000 : 0xfff;
+  no_noise = (waveform & 0x8) ? 0x000 : 0xfff;
   no_noise_or_noise_output = no_noise | noise_output;
-  no_pulse = waveform & 0x4 ? 0x000 : 0xfff;
+  no_pulse = (waveform & 0x4) ? 0x000 : 0xfff;
 
   // Test bit rising.
   // The accumulator is cleared, while the the shift register is prepared for

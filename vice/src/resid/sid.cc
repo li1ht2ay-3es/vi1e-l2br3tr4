@@ -32,7 +32,7 @@
 using namespace std;
 
 #ifndef round
-#define round(x) (x>=0.0?floor(x+0.5):ceil(x-0.5))
+#define round(x) ((x>=0.0)?floor(x+0.5):ceil(x-0.5))
 #endif
 
 namespace reSID
@@ -108,7 +108,7 @@ void SID::set_chip_model(chip_model model)
     delayfrq0    ~01d00
 
    */
-  databus_ttl = sid_model == MOS8580 ? 0xa2000 : 0x1d00;
+  databus_ttl = (sid_model == MOS8580) ? 0xa2000 : 0x1d00;
 
   for (int i = 0; i < 3; i++) {
     voice[i].set_chip_model(model);
@@ -665,7 +665,7 @@ bool SID::set_sampling_parameters(double clock_freq, sampling_method method,
 
   // We clamp the filter table resolution to 2^n, making the fixed point
   // sample_offset a whole multiple of the filter table resolution.
-  int res = method == SAMPLE_RESAMPLE ?
+  int res = (method == SAMPLE_RESAMPLE) ?
     FIR_RES : FIR_RES_FASTMEM;
   int n = (int)ceil(log(res/f_cycles_per_sample)/log(2.0f));
   int fir_RES_new = 1 << n;
@@ -696,8 +696,8 @@ bool SID::set_sampling_parameters(double clock_freq, sampling_method method,
       double jx = j - j_offset;
       double wt = wc*jx/f_cycles_per_sample;
       double temp = jx/(fir_N/2);
-      double Kaiser = fabs(temp) <= 1 ? I0(beta*sqrt(1 - temp*temp))/I0beta : 0;
-      double sincwt = fabs(wt) >= 1e-6 ? sin(wt)/wt : 1;
+      double Kaiser = (fabs(temp) <= 1) ? I0(beta*sqrt(1 - temp*temp))/I0beta : 0;
+      double sincwt = (fabs(wt) >= 1e-6) ? sin(wt)/wt : 1;
       double val = (1 << FIR_SHIFT)*filter_scale*f_samples_per_cycle*wc/pi*sincwt*Kaiser;
       fir[fir_offset + j] = (short)round(val);
     }
@@ -781,7 +781,7 @@ void SID::clock(cycle_count delta_t)
 
       // Clock on MSB off if MSB is on, clock on MSB on if MSB is off.
       reg24 delta_accumulator =
-        (accumulator & 0x800000 ? 0x1000000 : 0x800000) - accumulator;
+        ((accumulator & 0x800000) ? 0x1000000 : 0x800000) - accumulator;
 
       cycle_count delta_t_next = delta_accumulator/freq;
       if (likely(delta_accumulator%freq)) {

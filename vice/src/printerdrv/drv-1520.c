@@ -244,14 +244,14 @@ static void reset_scribe_state(plot_t *mps)
 
 static inline int vice_min(int a, int b)
 {
-    return a < b ? a : b;
+    return (a < b) ? a : b;
 }
 
 /* Used in DEBUG code only */
 #if 0
 static inline int vice_max(int a, int b)
 {
-    return a > b ? a : b;
+    return (a > b) ? a : b;
 }
 #endif
 

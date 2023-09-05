@@ -218,9 +218,9 @@ void WaveformGenerator::writeCONTROL_REG(unsigned char control)
         // no_noise and no_pulse are used in set_waveform_output() as bitmasks to
         // only let the noise or pulse influence the output when the noise or pulse
         // waveforms are selected.
-        no_noise = (waveform & 0x8) != 0 ? 0x000 : 0xfff;
+        no_noise = ((waveform & 0x8) != 0) ? 0x000 : 0xfff;
         no_noise_or_noise_output = no_noise | noise_output;
-        no_pulse = (waveform & 0x4) != 0 ? 0x000 : 0xfff;
+        no_pulse = ((waveform & 0x4) != 0) ? 0x000 : 0xfff;
 
         if (waveform == 0)
         {

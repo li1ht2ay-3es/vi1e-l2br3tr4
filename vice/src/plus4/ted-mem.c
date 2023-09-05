@@ -712,7 +712,7 @@ inline static void ted1c1d_store(uint16_t addr, uint8_t value)
             ted.raster_irq_clk++;*/
 
         if (ted.raster_irq_line <= new_raster) {
-            ted.raster_irq_clk += ((new_raster >= ted.screen_height ? 512 : ted.screen_height)
+            ted.raster_irq_clk += (((new_raster >= ted.screen_height) ? 512 : ted.screen_height)
                                    * ted.cycles_per_line);
         }
         alarm_set(ted.raster_irq_alarm, ted.raster_irq_clk);

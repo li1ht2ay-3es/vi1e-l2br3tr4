@@ -535,10 +535,10 @@ static void rsuser_write_ctrl(uint8_t status, int pulse)
     if (status != oldstatus) {
         printf("rsuser_write_ctrl(fd:%d) 2: status:%02x dtr:%d rts:%d modem_status:%02x cts:%d dsr:%d dcd:%d ri:%d\n",
                fd, status, dtr ? 1 : 0, rts ? 1 : 0, modem_status,
-               modem_status & RS232_HSI_CTS ? 1 : 0,
-               modem_status & RS232_HSI_DSR ? 1 : 0,
-               modem_status & RS232_HSI_DCD ? 1 : 0,
-               modem_status & RS232_HSI_RI ? 1 : 0
+               (modem_status & RS232_HSI_CTS) ? 1 : 0,
+               (modem_status & RS232_HSI_DSR) ? 1 : 0,
+               (modem_status & RS232_HSI_DCD) ? 1 : 0,
+               (modem_status & RS232_HSI_RI) ? 1 : 0
               );
         oldstatus = status;
     }
@@ -667,10 +667,10 @@ static uint8_t rsuser_read_ctrl(uint8_t orig)
 #if 0
     if (status != oldstatus) {
         printf("rsuser_read_ctrl(fd:%d) 1: mask:%02x modem_status:%02x cts:%d dsr:%d dcd:%d ri:%d\n",
-               fd, b, modem_status, modem_status & RS232_HSI_CTS ? 1 : 0,
-               modem_status & RS232_HSI_DSR ? 1 : 0,
-               modem_status & RS232_HSI_DCD ? 1 : 0,
-               modem_status & RS232_HSI_RI ? 1 : 0
+               fd, b, modem_status, (modem_status & RS232_HSI_CTS) ? 1 : 0,
+               (modem_status & RS232_HSI_DSR) ? 1 : 0,
+               (modem_status & RS232_HSI_DCD) ? 1 : 0,
+               (modem_status & RS232_HSI_RI) ? 1 : 0
               );
     }
 #endif
@@ -689,10 +689,10 @@ static uint8_t rsuser_read_ctrl(uint8_t orig)
 #ifdef LOG_MODEM_STATUS
     if (status != oldstatus) {
         printf("rsuser_read_ctrl(fd:%d): mask:%02x status:%02x cts:%d dsr:%d dcd:%d ri:%d\n",
-               fd, b, status, modem_status & RS232_HSI_CTS ? 1 : 0,
-               modem_status & RS232_HSI_DSR ? 1 : 0,
-               modem_status & RS232_HSI_DCD ? 1 : 0,
-               modem_status & RS232_HSI_RI ? 1 : 0
+               fd, b, status, (modem_status & RS232_HSI_CTS) ? 1 : 0,
+               (modem_status & RS232_HSI_DSR) ? 1 : 0,
+               (modem_status & RS232_HSI_DCD) ? 1 : 0,
+               (modem_status & RS232_HSI_RI) ? 1 : 0
               );
         oldstatus = status;
     }

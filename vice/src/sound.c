@@ -333,6 +333,11 @@ static int output_option;
 
 /* divisors for fragment size calculation */
 static const int fragment_divisor[] = {
+  1024, /* 100ms / 1024 = 0.078125ms */
+   512, /* 100ms / 512 = 0.078125ms */
+   256, /* 100ms / 256 = 0.078125ms */
+   128, /* 100ms / 128 = 0.15625ms */
+    64, /* 100ms / 64 = 0.3125ms */
     32, /* 100ms / 32 = 0.625ms */
     16, /* 100ms / 16 = 1.25ms */
      8, /* 100ms / 8 = 2.5ms */
@@ -469,8 +474,8 @@ static int set_volume(int val, void *param)
         volume = 0;
     }
 
-    if (volume > 100) {
-        volume = 100;
+    if (volume > 200) {
+        volume = 200;
     }
 
     amp = (int)((exp((double)volume / 100.0 * log(2.0)) - 1.0) * 4096.0);
@@ -935,7 +940,7 @@ int sound_open(void)
     /* Calculate buffer size in seconds. */
     bufsize = ((buffer_size < 1 || buffer_size > 1000)
                ? SOUND_SAMPLE_BUFFER_SIZE : buffer_size) / 1000.0;
-    speed = (sample_rate < 8000 || sample_rate > 96000)
+    speed = (sample_rate < 8000 || sample_rate > 768000)
             ? SOUND_SAMPLE_RATE : sample_rate;
 
     switch (output_option) {
@@ -1206,10 +1211,13 @@ static int sound_run_sound(void)
          snddata.fclk += nr * snddata.clkstep;
      }
 
-     if (amp < 4096) {
+     { //if (amp < 4096) {
          if (amp) {
              for (i = 0; i < (nr * snddata.sound_output_channels); i++) {
-                 bufferptr[i] = bufferptr[i] * amp / 4096;
+                 int temp = bufferptr[i] * amp / 4096;
+                 temp = (temp > 32767) ? 32767 : temp;
+                 temp = (temp < -32768) ? -32768 : temp;
+                 bufferptr[i] = temp;
              }
          } else {
              memset(bufferptr, 0, nr * snddata.sound_output_channels * sizeof(int16_t));

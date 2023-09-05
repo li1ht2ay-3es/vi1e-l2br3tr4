@@ -209,7 +209,7 @@ reg8 WaveformGenerator::output__S_()
 RESID_INLINE
 reg8 WaveformGenerator::output_P__()
 {
-  return (accumulator >> 12) >= pw ? 0xfff : 0x00;
+  return ((accumulator >> 12) >= pw) ? 0xfff : 0x00;
 }
 
 // Noise:

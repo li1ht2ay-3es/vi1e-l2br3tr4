@@ -270,10 +270,10 @@ inline static void _draw_std_text(uint8_t *p, unsigned int xs, unsigned int xe)
             uint32_t *ptr = table_ptr + ((ted.cbuf[i] & 0x7f) << 11);
 
             if ((ted.cbuf[i] & 0x80) && (!ted.cursor_visible)) {
-                d = (ted.vbuf[i] & 0x80 ? 0xff : 0x00);
+                d = ((ted.vbuf[i] & 0x80) ? 0xff : 0x00);
             } else {
                 d = *(char_ptr + (ted.vbuf[i] & 0x7f) * 8)
-                    ^ (ted.vbuf[i] & 0x80 ? 0xff : 0x00);
+                    ^ ((ted.vbuf[i] & 0x80) ? 0xff : 0x00);
             }
             if ((int)i == cursor_pos) {
                 d ^= 0xff;
@@ -308,7 +308,7 @@ inline static void _draw_std_text_cached(uint8_t *p, unsigned int xs,
         uint32_t *ptr = table_ptr + ((color_data[i] & 0x7f) << 11);
 
         if ((color_data[i] & 0x80) && (!ted.cursor_visible)) {
-            d = (vbuf[i] & 0x80 ? 0xff : 0x00);
+            d = ((vbuf[i] & 0x80) ? 0xff : 0x00);
         } else {
             d = foreground_data[i];
         }
@@ -390,10 +390,10 @@ static void draw_std_text_foreground(unsigned int start_char, unsigned int end_c
             uint8_t b, f;
 
             if ((ted.cbuf[i] & 0x80) && (!ted.cursor_visible)) {
-                b = (ted.vbuf[i] & 0x80 ? 0xff : 0x00);
+                b = ((ted.vbuf[i] & 0x80) ? 0xff : 0x00);
             } else {
                 b = char_ptr[(ted.vbuf[i] & 0x7f) * 8]
-                    ^ (ted.vbuf[i] & 0x80 ? 0xff : 0x00);
+                    ^ ((ted.vbuf[i] & 0x80) ? 0xff : 0x00);
             }
             if ((int)i == cursor_pos) {
                 b ^= 0xff;
@@ -1055,10 +1055,10 @@ static void init_drawing_tables(void)
                 offset = (f << 11) | (b << 4);
                 p = (uint8_t *)(hr_table + offset + i);
 
-                *p = i & 0x8 ? fp : bp;
-                *(p + 1) = i & 0x4 ? fp : bp;
-                *(p + 2) = i & 0x2 ? fp : bp;
-                *(p + 3) = i & 0x1 ? fp : bp;
+                *p = (i & 0x8) ? fp : bp;
+                *(p + 1) = (i & 0x4) ? fp : bp;
+                *(p + 2) = (i & 0x2) ? fp : bp;
+                *(p + 3) = (i & 0x1) ? fp : bp;
             }
         }
     }

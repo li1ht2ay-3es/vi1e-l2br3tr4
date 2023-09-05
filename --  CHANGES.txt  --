@@ -1,0 +1,4 @@
+Sound
+- Internal sampling rates  (higher values = less lag, more crisp)
+- Volume slider  (master = 0-200)
+- MinGW build fixes  (ternary parsing)

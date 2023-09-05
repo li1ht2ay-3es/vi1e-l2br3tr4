@@ -118,7 +118,7 @@ void EnvelopeGenerator::writeCONTROL_REG(unsigned char control)
 
             if (resetLfsr || (exponential_pipeline == 2))
             {
-                envelope_pipeline = (exponential_counter_period == 1) || (exponential_pipeline == 2) ? 2 : 4;
+                envelope_pipeline = ((exponential_counter_period == 1) || (exponential_pipeline == 2)) ? 2 : 4;
             }
             else if (exponential_pipeline == 1)
             {
@@ -129,7 +129,7 @@ void EnvelopeGenerator::writeCONTROL_REG(unsigned char control)
         {
             // Gate bit off: Start release.
             next_state = RELEASE;
-            state_pipeline = envelope_pipeline > 0 ? 3 : 2;
+            state_pipeline = (envelope_pipeline > 0) ? 3 : 2;
         }
     }
 }

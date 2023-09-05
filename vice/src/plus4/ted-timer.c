@@ -66,8 +66,8 @@ static CLOCK t3_value;
 static void ted_t1(CLOCK offset, void *data)
 {
     alarm_set(ted_t1_alarm, maincpu_clk
-              + (t1_start == 0 ? 65536 : t1_start) * 2 - offset);
-    t1_value = (t1_start == 0 ? 65536 : t1_start) * 2 - offset;
+              + ((t1_start == 0) ? 65536 : t1_start) * 2 - offset);
+    t1_value = ((t1_start == 0) ? 65536 : t1_start) * 2 - offset;
 #ifdef DEBUG_TIMER
     log_debug("TI1 ALARM %x", maincpu_clk);
 #endif
@@ -117,7 +117,7 @@ static void ted_timer_t1_store_high(uint8_t value)
     alarm_unset(ted_t1_alarm);
     t1_value = (t1_start = (t1_start & 0x00ff) | (value << 8)) << 1;
     alarm_set(ted_t1_alarm, maincpu_clk
-              + (t1_start == 0 ? 65536 : t1_start) * 2);
+              + ((t1_start == 0) ? 65536 : t1_start) * 2);
     t1_last_restart = maincpu_clk;
     t1_running = 1;
 }
@@ -134,7 +134,7 @@ static void ted_timer_t2_store_high(uint8_t value)
     alarm_unset(ted_t2_alarm);
     t2_value = (t2_start = (t2_start & 0x00ff) | (value << 8)) << 1;
     alarm_set(ted_t2_alarm, maincpu_clk
-              + (t2_start == 0 ? 65536 : t2_start) * 2);
+              + ((t2_start == 0) ? 65536 : t2_start) * 2);
     t2_last_restart = maincpu_clk;
     t2_running = 1;
 }
@@ -151,7 +151,7 @@ static void ted_timer_t3_store_high(uint8_t value)
     alarm_unset(ted_t3_alarm);
     t3_value = (t3_start = (t3_start & 0x00ff) | (value << 8)) << 1;
     alarm_set(ted_t3_alarm, maincpu_clk
-              + (t3_start == 0 ? 65536 : t3_start) * 2);
+              + ((t3_start == 0) ? 65536 : t3_start) * 2);
     t3_last_restart = maincpu_clk;
     t3_running = 1;
 }

@@ -130,7 +130,7 @@ static int get_charset_bit(mps_t *mps, int nr, unsigned int col,
 
     reverse = is_mode(mps, MPS_REVERSE);
 
-    result = charset[nr][row] & (1 << (7 - col)) ? !reverse : reverse;
+    result = (charset[nr][row] & (1 << (7 - col))) ? !reverse : reverse;
 
     return result;
 }
@@ -235,7 +235,7 @@ static void print_bitmask(mps_t *mps, unsigned int prnr, const char c)
             clear_buffer(mps);
         }
     for (y = 0; y < 7; y++) {
-        mps->line[mps->pos][y] = c & (1 << (y)) ? 1 : 0;
+        mps->line[mps->pos][y] = (c & (1 << (y))) ? 1 : 0;
     }
 
     mps->pos++;

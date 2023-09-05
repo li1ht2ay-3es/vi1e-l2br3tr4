@@ -77,7 +77,7 @@ double OpAmp::solve(double n, double vi) const
         }
 
         // Narrow down root bracket.
-        (f < 0. ? bk : ak) = xk;
+        ((f < 0.) ? bk : ak) = xk;
 
         if (unlikely(x <= ak) || unlikely(x >= bk))
         {

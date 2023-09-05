@@ -240,7 +240,7 @@ void WaveformGenerator::clock(cycle_count delta_t)
 
     // Calculate pulse high/low.
     // NB! The one-cycle pipeline delay is only modeled for 1 cycle clocking.
-    pulse_output = (accumulator >> 12) >= pw ? 0xfff : 0x000;
+    pulse_output = ((accumulator >> 12) >= pw) ? 0xfff : 0x000;
   }
 }
 
@@ -503,7 +503,7 @@ void WaveformGenerator::set_waveform_output()
     }
   }
 
-  // The pulse level is defined as (accumulator >> 12) >= pw ? 0xfff : 0x000.
+  // The pulse level is defined as ((accumulator >> 12) >= pw) ? 0xfff : 0x000.
   // The expression -((accumulator >> 12) >= pw) & 0xfff yields the same
   // results without any branching (and thus without any pipeline stalls).
   // NB! This expression relies on that the result of a boolean expression

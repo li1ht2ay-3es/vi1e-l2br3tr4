@@ -497,9 +497,9 @@ inline static void setup_sid(sound_t *psid)
     psid->has3 = ((psid->d[0x18] & 0x80) && !(psid->d[0x17] & 0x04)) ? 0 : 1;
 
     if (psid->emulatefilter) {
-        psid->v[0].filter = psid->d[0x17] & 0x01 ? 1 : 0;
-        psid->v[1].filter = psid->d[0x17] & 0x02 ? 1 : 0;
-        psid->v[2].filter = psid->d[0x17] & 0x04 ? 1 : 0;
+        psid->v[0].filter = (psid->d[0x17] & 0x01) ? 1 : 0;
+        psid->v[1].filter = (psid->d[0x17] & 0x02) ? 1 : 0;
+        psid->v[2].filter = (psid->d[0x17] & 0x04) ? 1 : 0;
         psid->filterType = psid->d[0x18] & 0x70;
         if (psid->filterType != psid->filterCurType) {
             psid->filterCurType = psid->filterType;
@@ -543,7 +543,7 @@ inline static void setup_voice(voice_t *pv)
 #ifndef WAVETABLES
     pv->pw = (pv->d[2] + (pv->d[3] & 0x0f) * 0x100) * 0x100100;
 #endif
-    pv->sync = pv->d[4] & 0x02 ? 1 : 0;
+    pv->sync = (pv->d[4] & 0x02) ? 1 : 0;
     pv->fs = pv->s->speed1 * (pv->d[0] + pv->d[1] * 0x100);
 #ifdef WAVETABLES
     if (pv->d[4] & 0x08) {
@@ -919,7 +919,7 @@ static int fastsid_init(sound_t *psid, int speed, int cycles_per_sec, int factor
     }
 
     for (i = 0; i < 4096; i++) {
-        wavetable10[i] = (uint16_t)(i < 2048 ? i << 4 : 0xffff - (i << 4));
+        wavetable10[i] = (uint16_t)((i < 2048) ? i << 4 : 0xffff - (i << 4));
         wavetable20[i] = (uint16_t)(i << 3);
         wavetable30[i] = waveform30_8580[i] << 7;
         wavetable40[i + 4096] = 0x7fff;

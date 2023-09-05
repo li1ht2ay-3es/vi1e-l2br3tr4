@@ -85,9 +85,9 @@ static int plus4model_get_temp(int video, int ramsize, int hasspeech, int hasaci
             && (plus4models[i].ramsize == ramsize)
             && (plus4models[i].hasspeech == hasspeech)
             && (plus4models[i].hasacia == hasacia)
-            && ((strlen(plus4models[i].plus1loname) == 0 ? 1 : 0) == (strlen(plus1loname) == 0 ? 1 : 0))
-            && ((strlen(plus4models[i].plus1hiname) == 0 ? 1 : 0) == (strlen(plus1hiname) == 0 ? 1 : 0))
-            && ((strlen(plus4models[i].c2loname) == 0 ? 1 : 0) == (strlen(c2loname) == 0 ? 1 : 0))
+            && (((strlen(plus4models[i].plus1loname) == 0) ? 1 : 0) == ((strlen(plus1loname) == 0) ? 1 : 0))
+            && (((strlen(plus4models[i].plus1hiname) == 0) ? 1 : 0) == ((strlen(plus1hiname) == 0) ? 1 : 0))
+            && (((strlen(plus4models[i].c2loname) == 0) ? 1 : 0) == ((strlen(c2loname) == 0) ? 1 : 0))
             && (kernal && (strcmp(plus4models[i].kernalname, kernal) == 0))) {
             return i;
         }

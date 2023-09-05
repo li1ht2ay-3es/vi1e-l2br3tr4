@@ -134,7 +134,7 @@ FilterModelConfig8580::FilterModelConfig8580() :
     uCox(100e-6),
     Vddt(Vdd - Vth),
     vmin(opamp_voltage[0].x),
-    vmax(Vddt < opamp_voltage[0].y ? opamp_voltage[0].y : Vddt),
+    vmax((Vddt < opamp_voltage[0].y) ? opamp_voltage[0].y : Vddt),
     denorm(vmax - vmin),
     norm(1.0 / denorm),
     N16(norm * ((1 << 16) - 1))

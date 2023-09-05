@@ -651,7 +651,7 @@ static int tap_cbm_read_block_once(tap_t *tap, int *pass, uint8_t *buffer, int *
                 return -2; /* sync read error */
             }
             if (found_pass < 0) {
-                found_pass = data & 0x80 ? 1 : 2;
+                found_pass = (data & 0x80) ? 1 : 2;
             } else if ((found_pass == 1 && !(data & 0x80)) || (found_pass == 2 && (data & 0x80))) {
                 return -2; /* sync read error */
             }

@@ -126,7 +126,7 @@ void ted_irq_set_raster_line(unsigned int line)
         }
 
         if (line <= current_line) {
-            ted.raster_irq_clk += ((current_line >= ted.screen_height ? 512 : ted.screen_height)
+            ted.raster_irq_clk += (((current_line >= ted.screen_height) ? 512 : ted.screen_height)
                                    * ted.cycles_per_line);
         }
         alarm_set(ted.raster_irq_alarm, ted.raster_irq_clk);

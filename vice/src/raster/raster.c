@@ -128,8 +128,8 @@ void raster_draw_buffer_ptr_update(raster_t *raster)
     raster->draw_buffer_ptr =
         raster->canvas->draw_buffer->draw_buffer
         /* lines 0+ are displayed in the lower border on NTSC VIC-II */
-        + ((raster->current_line < raster->geometry->first_displayed_line
-            && raster->geometry->screen_size.height <= raster->geometry->last_displayed_line ?
+        + (((raster->current_line < raster->geometry->first_displayed_line
+            && raster->geometry->screen_size.height <= raster->geometry->last_displayed_line) ?
             raster->geometry->screen_size.height : 0
             ) + raster->current_line
            ) * raster_calc_frame_buffer_width(raster)
@@ -143,7 +143,7 @@ static int raster_realize_frame_buffer(raster_t *raster)
     raster_draw_buffer_free(raster->canvas);
 
     fb_width = raster_calc_frame_buffer_width(raster);
-    fb_height = raster->geometry->screen_size.height > raster->geometry->last_displayed_line ?
+    fb_height = (raster->geometry->screen_size.height > raster->geometry->last_displayed_line) ?
                 raster->geometry->screen_size.height
                 : raster->geometry->last_displayed_line + 1; /* allocate extra space for the */
     /* lower part of the visible lower border (lines 0+) on NTSC VIC-II */

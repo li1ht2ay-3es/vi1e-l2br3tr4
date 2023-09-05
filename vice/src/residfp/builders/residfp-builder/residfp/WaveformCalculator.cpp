@@ -79,7 +79,7 @@ short calculateCombinedWaveform(CombinedWaveformConfig config, int waveform, int
     // Saw
     for (unsigned int i = 0; i < 12; i++)
     {
-        o[i] = (accumulator & (1 << i)) != 0 ? 1.f : 0.f;
+        o[i] = ((accumulator & (1 << i)) != 0) ? 1.f : 0.f;
     }
 
     // convert to Triangle
@@ -178,7 +178,7 @@ short calculateCombinedWaveform(CombinedWaveformConfig config, int waveform, int
 
 matrix_t* WaveformCalculator::buildTable(ChipModel model)
 {
-    const CombinedWaveformConfig* cfgArray = config[model == MOS6581 ? 0 : 1];
+    const CombinedWaveformConfig* cfgArray = config[(model == MOS6581) ? 0 : 1];
 
     cw_cache_t::iterator lb = CACHE.lower_bound(cfgArray);
 
@@ -192,7 +192,7 @@ matrix_t* WaveformCalculator::buildTable(ChipModel model)
     for (unsigned int idx = 0; idx < 1 << 12; idx++)
     {
         wftable[0][idx] = 0xfff;
-        wftable[1][idx] = static_cast<short>((idx & 0x800) == 0 ? idx << 1 : (idx ^ 0xfff) << 1);
+        wftable[1][idx] = static_cast<short>(((idx & 0x800) == 0) ? idx << 1 : (idx ^ 0xfff) << 1);
         wftable[2][idx] = static_cast<short>(idx);
         wftable[3][idx] = calculateCombinedWaveform(cfgArray[0], 3, idx);
         wftable[4][idx] = 0xfff;
